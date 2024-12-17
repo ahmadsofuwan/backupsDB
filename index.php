@@ -13,6 +13,8 @@ $conn = new mysqli('localhost', $mysql_user, $mysql_pass);
 if ($conn->connect_error) {
     echo "Gagal terkoneksi\n";
     die("Connection failed: " . $conn->connect_error);
+} else {
+    echo "Berhasil terkoneksi\n";
 }
 
 echo "Mengambil daftar database yang ada...\n";
