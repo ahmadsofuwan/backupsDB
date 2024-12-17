@@ -1,7 +1,7 @@
 <?php
 
-// Pengaturan konfigurasi MySQL
-$mysql_user = 'root';
+// Pengaturan konfigurasi MySQLaa
+$mysql_user = 'user';
 $mysql_pass = 'Ahmadsofuwan@123';
 $backup_dir = '/var/www/backupsDB';
 
