@@ -1,28 +1,28 @@
 <?php
 
 // Pengaturan konfigurasi MySQL
-$mysql_user = 'root';
+$mysql_user = 'user';
 $mysql_pass = 'Ahmadsofuwan@123';
 $backup_dir = '/var/www/backupsDB';
 
 // Menyambung ke MySQL dan mendapatkan daftar database
-echo 'Menyambung ke MySQL dan mendapatkan daftar database ...\n';
+echo 'Menyambung ke MySQL dan mendapatkan daftar database';
 $conn = new mysqli('localhost', $mysql_user, $mysql_pass);
 
 // Memeriksa koneksi
 if ($conn->connect_error) {
-    echo 'Gagal terkoneksi ...\n';
+    echo 'Gagal terkoneksi';
     die("Connection failed: " . $conn->connect_error);
 } else {
-    echo 'Gagal berhasil ...\n';
+    echo 'Gagal terkoneksi';
 }
-echo 'Mengambil daftar database yang ada ...\n';
+echo 'Mengambil daftar database yang ada';
 // Mengambil daftar database yang ada
 $result = $conn->query("SHOW DATABASES");
 
 // Menyaring database yang tidak perlu
 $databases = [];
-echo 'Menyaring database yang tidak perlu ...\n';
+echo 'Menyaring database yang tidak perlu';
 while ($row = $result->fetch_row()) {
     $db = $row[0];
     // Menyaring database sistem yang tidak perlu di-backup
@@ -32,7 +32,7 @@ while ($row = $result->fetch_row()) {
 }
 
 foreach ($databases as $db) {
-    echo 'backups' . $db . '...\n';
+    echo 'backups' . $db;
     $backup_file = $backup_dir . '/' . $db . '/' . $db . '-' . date('YmdHis') . '.sql';
 
     // Menjalankan mysqldump untuk backup database
@@ -46,7 +46,7 @@ foreach ($databases as $db) {
             unlink($file);
         }
     }
-    echo 'backups' . $db . '...\n';
+    echo 'backups' . $db;
 }
 
 // Menutup koneksi
