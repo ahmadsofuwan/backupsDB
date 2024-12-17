@@ -7,7 +7,7 @@ $backup_dir = '/var/www/backupsDB';
 
 // Menyambung ke MySQL dan mendapatkan daftar database
 echo "Menyambung ke MySQL dan mendapatkan daftar database...\n";
-$conn = new mysqli('localhost', $mysql_user, $mysql_pass);
+$conn = new mysqli('localhost:3306', $mysql_user, $mysql_pass);
 
 // Memeriksa koneksi
 if ($conn->connect_error) {
