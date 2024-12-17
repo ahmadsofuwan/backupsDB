@@ -27,19 +27,21 @@ while ($row = $result->fetch_row()) {
 }
 
 foreach ($databases as $db) {
-    $backup_file = $backup_dir . '/' . $db . '-' . date('YmdHis') . '.sql';
+    echo 'backups' . $db;
+    $backup_file = $backup_dir . '/' . $db . '/' . $db . '-' . date('YmdHis') . '.sql';
 
     // Menjalankan mysqldump untuk backup database
     $command = "mysqldump -u $mysql_user -p$mysql_pass $db > $backup_file";
     exec($command);
 
     // Menghapus backup yang lebih dari 3 hari
-    $files = glob($backup_dir . '/' . $db . '-*.sql');
+    $files = glob($backup_dir . '/' . $db . '/' . $db . '-*.sql');
     foreach ($files as $file) {
         if (filemtime($file) < time() - 3 * 86400) {  // 3 hari dalam detik
             unlink($file);
         }
     }
+    echo 'backups' . $db;
 }
 
 // Menutup koneksi
