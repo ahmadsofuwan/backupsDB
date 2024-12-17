@@ -11,6 +11,7 @@ $conn = new mysqli('localhost', $mysql_user, $mysql_pass);
 
 // Memeriksa koneksi
 if ($conn->connect_error) {
+    echo 'Gagal terkoneksi';
     die("Connection failed: " . $conn->connect_error);
 }
 echo 'Mengambil daftar database yang ada';
