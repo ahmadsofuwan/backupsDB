@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USER="root"
+USER="user"
 PASSWORD="Ahmadsofuwan@123"
 #OUTPUT="/Users/rabino/DBs"
 
