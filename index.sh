@@ -1,31 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
-# Direktori penyimpanan backup
-BACKUP_DIR="/var/www/backupsDB"
+USER="root"
+PASSWORD="Ahmadsofuwan@123"
+#OUTPUT="/Users/rabino/DBs"
 
-# Pengguna MySQL dan password
-MYSQL_USER="root"
-MYSQL_PASS="Ahmadsofuwan@123"
+#rm "$OUTPUTDIR/*gz" > /dev/null 2>&1
 
-# Menangani kesalahan dan variabel yang belum didefinisikan
-set -e
-set -u
+databases=`mysql -u $USER -p$PASSWORD -e "SHOW DATABASES;" | tr -d "| " | grep -v Database`
 
-# Mengambil daftar semua database
-DATABASES=$(mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -e "SHOW DATABASES;" | grep -vE "(Database|information_schema|performance_schema|mysql|sys)")
-
-# Loop untuk setiap database
-for DB in $DATABASES; do
-    # Nama file backup berdasarkan nama database
-    BACKUP_FILE="$BACKUP_DIR/$DB-$(date +\%Y\%m\%d\%H\%M).sql"
-
-    # Melakukan backup untuk setiap database
-    echo "Membackup database: $DB"
-    mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASS" "$DB" > "$BACKUP_FILE"
-    
-    # Menghapus backup yang lebih lama dari 3 hari
-    echo "Menghapus backup yang lebih lama dari 3 hari"
-    find "$BACKUP_DIR" -type f -name "$DB-*.sql" -mtime +3 -exec rm {} \;
+for db in $databases; do
+    if [[ "$db" != "information_schema" ]] && [[ "$db" != "performance_schema" ]] && [[ "$db" != "mysql" ]] && [[ "$db" != _* ]] ; then
+        echo "Dumping database: $db"
+        mysqldump -u $USER -p$PASSWORD --databases $db > `date +%Y%m%d`.$db.sql
+       # gzip $OUTPUT/`date +%Y%m%d`.$db.sql
+    fi
 done
-
-echo "Backup selesai!"
